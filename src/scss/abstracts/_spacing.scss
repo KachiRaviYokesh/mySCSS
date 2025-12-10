@@ -1,0 +1,62 @@
+@use "sass:map";
+
+$space-units: ();
+
+@for $i from 0 through 200 {
+    $space-units: map.merge($space-units,($i: $i * .25rem));
+}
+$space-units: map.merge($space-units,(auto: auto));
+
+$spacing-directions: (
+    m-around: (flag: 'mar', properties: (margin)),
+    m-top: (flag: 'mar-t', properties: (margin-top)),
+    m-bottom: (flag: 'mar-b', properties: (margin-bottom)),
+    m-left: (flag: 'mar-l', properties: (margin-left)),
+    m-right: (flag: 'mar-r', properties: (margin-right)),
+    m-xaxis: (flag: 'mar-x', properties: (margin-left, margin-right)),
+    m-yaxis: (flag: 'mar-y', properties: (margin-top, margin-bottom)),
+);
+
+$spacing-directions: map.merge($spacing-directions, (
+    p-around: (flag: 'pad', properties: (padding)),
+    p-top: (flag: 'pad-t', properties: (padding-top)),
+    p-bottom: (flag: 'pad-b', properties: (padding-bottom)),
+    p-left: (flag: 'pad-l', properties: (padding-left)),
+    p-right: (flag: 'pad-r', properties: (padding-right)),
+    p-xaxis: (flag: 'pad-x', properties: (padding-left, padding-right)),
+    p-yaxis: (flag: 'pad-y', properties: (padding-top, padding-bottom)),
+));
+
+$spacing-directions: map.merge($spacing-directions, (
+    br-around: (flag: 'rounded', properties: (border-radius)),
+    br-circle: (flag: 'rounded-circle', properties: (border-radius)),
+    br-top-left: (flag: 'rounded-tl', properties: (border-top-left-radius)),
+    br-top-right: (flag: 'rounded-tr', properties: (border-top-right-radius)),
+    br-bottom-left: (flag: 'rounded-bl', properties: (border-bottom-left-radius)),
+    br-bottom-right: (flag: 'rounded-br', properties: (border-bottom-right-radius)),
+    br-top: (flag: 'rounded-t', properties: (border-top-left-radius, border-top-right-radius)),
+    br-bottom: (flag: 'rounded-b', properties: (border-bottom-left-radius, border-bottom-right-radius)),
+    br-left: (flag: 'rounded-l', properties: (border-top-left-radius, border-bottom-left-radius)),
+    br-right: (flag: 'rounded-r', properties: (border-top-right-radius, border-bottom-right-radius)),
+));
+
+@each $position, $position-configs in $spacing-directions {
+    $flag-alias: map.get($position-configs, flag);
+    $flag-properties: map.get($position-configs, properties);
+    @each $number, $values in $space-units {
+        @if $flag-alias == 'rounded-circle' {
+            .#{$flag-alias} {
+                @each $props in $flag-properties {
+                    #{$props}: 100%;
+                }
+            }
+        }
+        @else {
+            .#{$flag-alias}-#{$number} {
+                @each $props in $flag-properties {
+                    #{$props}: #{$values};
+                }
+            }
+        }
+    }
+}

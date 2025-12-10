@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@use './scss/abstracts' as *;
+
+.main-section-primary {
+    background-color: $primary; 
+}
+.main-section-secondary {
+    background-color: $secondary;
+}
+.center-element {
+    @include element-center;
+    font-size: halfValue(88px);
+}
+.middle {
+    background: mix(black, #3498db, 10%);
+}
