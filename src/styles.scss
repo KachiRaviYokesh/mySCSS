@@ -1,3 +1,4 @@
+@use "sass:color";
 @use './scss/abstracts' as *;
 
 .main-section-primary {
@@ -11,5 +12,5 @@
     font-size: halfValue(88px);
 }
 .middle {
-    background: mix(black, #3498db, 10%);
+    background: color.mix(black, #3498db, 10%);
 }

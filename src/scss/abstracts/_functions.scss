@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @function halfValue($value) {
-    @return $value /  2;
+    @return math.div($value, 2);
 }
